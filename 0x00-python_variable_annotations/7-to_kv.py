@@ -2,13 +2,11 @@
 """
 moduel sum of list.
 """
-from typing import List, Union
+from typing import List, Union, Tuple
 
 
-def to_kv(k: str, v: Union[int, float]) -> tuple:
+def to_kv(k: str, v: Union[int, float]) -> Tuple[str, float]:
     """
     returns return sum of list elements.
     """
-    Li_st = [k, float((v**2))]
-    tu_ple = tuple(Li_st)
-    return tu_ple
+    return (k, v**2)
