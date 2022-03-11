@@ -1,4 +1,5 @@
 
+#!/usr/bin/env python3
 """Annotated Function"""
 from typing import List, Iterable, Sequence, Tuple
 
