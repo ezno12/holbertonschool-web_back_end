@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-moduel convert float to string.
+moduel sum of list.
 """
 from typing import List
 
 
 def sum_list(input_list: List[float]) -> float:
     """
-    returns the string representation of the float.
+    returns return sum of list element.
     """
     x: int = 0
     for i in input_list:
