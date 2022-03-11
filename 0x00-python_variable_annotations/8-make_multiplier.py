@@ -2,7 +2,7 @@
 """
 moduel multiple.
 """
-from typing import List, Union, Tuple, Callable
+from typing import Callable
 
 
 def make_multiplier(multiplier: float) -> Callable[[float], float]:
