@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 """
+moduel sum
 """
 
 
 def add(a: float, b: float) -> float:
-    return a +b
+    """
+    function sum
+    """
+    return a + b
