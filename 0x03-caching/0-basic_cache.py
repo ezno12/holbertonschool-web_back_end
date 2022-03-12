@@ -12,7 +12,7 @@ class BasicCache(BaseCaching):
         """
         add item to cache
         """
-        if (key is not None or item is not None):
+        if (key is not None and item is not None):
             self.cache_data[key] = item
             
         
