@@ -5,9 +5,12 @@ pagination modul
 from typing import Tuple
 
 
-def index_range(page: int, page_size: int) -> Tuple[int, ...]:
+def index_range(page: int, page_size: int) -> Tuple[int, int]:
     """
     return a tuple of size two containing a start index and an end index
     """
-    tpl = tuple([(page - 1) * page_size, page * page_size])
-    return tpl
+    end: int = page * page_size
+    start: int = 0
+    for _ in range(page - 1):
+        start += page_size
+    return (start, end)
