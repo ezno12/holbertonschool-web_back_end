@@ -12,18 +12,16 @@ class BasicCache(BaseCaching):
         """
         add item to cache
         """
-        if (key is None or item is None):
-            return None
-        else:
-            cache_item = self.cache_data[key] = item
-            return cache_item
+        if (key is not None or item is not None):
+            self.cache_data[key] = item
+            
         
 
     def get(self, key):
         """
         Get item from cache
         """
-        if (key is None):
+        if key is None or key not in self.cache_data.keys():
             return None
         else:
-            return self.cache_Data[key]
+            return self.cache_data[key]
