@@ -4,27 +4,23 @@ flask app
 """
 from flask import Flask, request, render_template
 from flask_babel import Babel
-from datetime import datetime
-import pytz
 
 app = Flask(__name__)
 babel = Babel(app)
 
 
-class Config:
+class Config(object):
     """
     """
     LANGUAGES = ["en", "fr"]
+    DEFAULT_LOCAL = "en"
+    DEFAULT_TIMEZONE = "UTC"
 
-@babel.localeselector
-def get_locale():
-    return Config.LANGUAGES[0]
+app.config.from_object(Config)
 
 @app.route("/")
 def hello_world():
     """
     hello world
     """
-    utc = pytz.utc
-
-    return render_template("1-index.html", utc_zone = utc)
+    return render_template("1-index.html")
