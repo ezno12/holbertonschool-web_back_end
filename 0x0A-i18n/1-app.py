@@ -16,7 +16,9 @@ class Config(object):
     DEFAULT_LOCAL = "en"
     DEFAULT_TIMEZONE = "UTC"
 
+
 app.config.from_object(Config)
+
 
 @app.route("/")
 def hello_world():
