@@ -3,7 +3,7 @@
 flask app
 """
 from flask import Flask, request, render_template
-from flask_babel import Babel, _
+from flask_babel import Babel, gettext
 
 app = Flask(__name__)
 babel = Babel(app)
