@@ -19,6 +19,7 @@ class Config(object):
 
 
 app.config.from_object(Config)
+"""config app"""
 
 
 @babel.localeselector
@@ -34,5 +35,4 @@ def hello_world():
     """
     hello world
     """
-
     return render_template("3-index.html")
