@@ -40,5 +40,4 @@ def hello_world():
     """
     hello world
     """
-    
     return render_template("4-index.html")
