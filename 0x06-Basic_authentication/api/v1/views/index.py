@@ -31,10 +31,4 @@ def unauthorized():
     """
     unauthorize request
     """
-    resource = status()
-
-    if resource is None:
-        abort(404)
-
-    return jsonify(resource)
-
+    abort(401)
