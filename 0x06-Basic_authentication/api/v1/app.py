@@ -19,7 +19,7 @@ def forbidden(error) -> str:
     """
     forbidden handler
     """
-    return jsonify({"error": "Forbidden"}, 403)
+    return jsonify({"error": "Forbidden"}), 403
 
 
 @app.errorhandler(401)
