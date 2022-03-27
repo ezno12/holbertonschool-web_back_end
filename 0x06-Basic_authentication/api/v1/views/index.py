@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """ Module of Index views
 """
+from crypt import methods
+from email.policy import strict
 from flask import jsonify, abort
 from api.v1.views import app_views
 
@@ -32,3 +34,11 @@ def unauthorized() -> str:
     unauthorize request
     """
     abort(401)
+
+
+@app_views.route("/forbidden", methods=['GET'], strict_slashes=False)
+def forbidden() -> str:
+    """
+    forbidden request
+    """
+    abort(403)
