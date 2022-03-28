@@ -2,16 +2,24 @@
 """
 Route module for the API
 """
+from binascii import rledecode_hqx
+from logging import basicConfig
 from os import getenv
 from api.v1.views import app_views
 from flask import Flask, jsonify, abort, request
 from flask_cors import (CORS, cross_origin)
 import os
+from api.v1.auth.auth import Auth
 
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
 CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
+auth = None
+
+
+if os.getenv('AUTH_TYPE'):
+    auth = Auth()
 
 
 @app.errorhandler(403)
@@ -19,7 +27,7 @@ def forbidden(error) -> str:
     """
     forbidden handler
     """
-    return jsonify({"error": "Forbidden"}), 403
+    return jsonify({"error": "Forbidden"}, 403)
 
 
 @app.errorhandler(401)
@@ -34,6 +42,26 @@ def not_found(error) -> str:
     """ Not found handler
     """
     return jsonify({"error": "Not found"}), 404
+
+
+@app.before_request
+def before_req() -> None:
+    """
+    """
+    if auth is None:
+        return
+    routes_list = ['/api/v1/status/',
+                   '/api/v1/unauthorized/',
+                   '/api/v1/forbidden/']
+
+    if auth.require_auth(request.path, routes_list) is False:
+        return
+    if auth.authorization_header(request) is None:
+        raise abort(401)
+    if auth.current_user(request) is None:
+        raise abort(403)
+    else:
+        return None
 
 
 if __name__ == "__main__":
