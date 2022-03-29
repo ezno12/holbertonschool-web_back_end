@@ -27,7 +27,7 @@ def forbidden(error) -> str:
     """
     forbidden handler
     """
-    return jsonify({"error": "Forbidden"}, 403)
+    return jsonify({"error": "Forbidden"}), 403
 
 
 @app.errorhandler(401)
@@ -49,7 +49,7 @@ def before_req() -> None:
     """
     """
     if auth is None:
-        return
+        return None
     routes_list = ['/api/v1/status/',
                    '/api/v1/unauthorized/',
                    '/api/v1/forbidden/']
