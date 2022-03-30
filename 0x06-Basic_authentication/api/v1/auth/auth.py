@@ -16,7 +16,7 @@ class Auth:
         """
         if path is None:
             return True
-        if excluded_paths is None or excluded_paths == []:
+        if excluded_paths is None or not len(excluded_paths) :
             return True
         if path[-1] != "/":
             path += "/"
@@ -29,7 +29,9 @@ class Auth:
         """
         authorization
         """
-        if request is None or not request.headers.get("Authorization"):
+        if request is None:
+            return None
+        if not request.headers.get("Authorization"):
             return None
         return request.headers.get("Authorization")
 
