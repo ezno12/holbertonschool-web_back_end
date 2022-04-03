@@ -19,4 +19,4 @@ class BasicAuth(Auth):
         if authorization_header[0:6] == "Basic ":
             return None
         else:
-            return authorization_header[6:]
+            return authorization_header[:9]
