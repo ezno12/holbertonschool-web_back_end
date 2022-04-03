@@ -2,7 +2,6 @@
 """
 basic auth
 """
-from turtle import st
 from api.v1.auth.auth import Auth
 
 
