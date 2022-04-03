@@ -14,9 +14,9 @@ class BasicAuth(Auth):
         """
         if authorization_header is None:
             return None
-        if isinstance(authorization_header, str) is False:
+        elif isinstance(authorization_header, str) is False:
             return None
-        if authorization_header[0:6] == "Basic ":
+        elif authorization_header[0:6] != "Basic ":
             return None
         else:
-            return authorization_header[:9]
+            return authorization_header[6:]
