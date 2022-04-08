@@ -3,6 +3,7 @@
 basic auth
 """
 import base64
+from email.header import decode_header
 from email.mime import base
 from typing import Tuple
 from api.v1.auth.auth import Auth
@@ -75,3 +76,16 @@ class BasicAuth(Auth):
         if user[0].is_valid_password(user_pwd) and user:
             return user[0]
         return None
+
+    def current_user(self, request=None) -> TypeVar('User'):
+        """
+        return current user
+        """
+        try:
+            header = self.authorization_header(request)
+            base64_auth = self.extract_base64_authorization_header(header)
+            decode_header = self.decode_base64_authorization_header(base64_auth)
+            user_credentials = self.extract_user_credentials(decode_header)
+            return self.user_object_from_credentials(user_credentials[0], user_credentials[1])
+        except Exception:
+            return None
