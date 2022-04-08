@@ -7,11 +7,15 @@ from api.v1.auth.auth import Auth
 
 
 class BasicAuth(Auth):
-    """"""
+    """
+    basic Auth
+    """
 
     def extract_base64_authorization_header(self, authorization_header: str
                                             ) -> str:
-        """"""
+        """
+        return base64 auth header
+        """
         if authorization_header is None:
             return None
         elif isinstance(authorization_header, str) is False:
@@ -24,7 +28,9 @@ class BasicAuth(Auth):
     def decode_base64_authorization_header(
         self, base64_authorization_header: str
     ) -> str:
-        """"""
+        """
+        return decode value utf-8 string
+        """
         if base64_authorization_header is None:
             return None
         if isinstance(base64_authorization_header, str) is False:
