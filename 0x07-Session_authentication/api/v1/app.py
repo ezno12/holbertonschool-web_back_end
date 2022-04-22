@@ -58,12 +58,12 @@ def before_req() -> None:
 
     if auth.require_auth(request.path, routes_list) is False:
         return
-    if auth.authorization_header(request) is None:
-        raise abort(401)
+    if auth.authorization_header(request) is None and \
+            auth.session_cookie(request) is None:
+        abort(401)
+    request.current_user = auth.current_user(request)
     if auth.current_user(request) is None:
-        raise abort(403)
-    else:
-        return None
+        abort(403)
 
 
 if __name__ == "__main__":
