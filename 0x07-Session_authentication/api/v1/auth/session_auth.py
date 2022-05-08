@@ -9,7 +9,7 @@ from uuid import uuid4
 
 class SessionAuth(Auth):
     """
-    session authentication class
+    session authentication class inheret it from class Auth
     """
     user_id_by_session_id = {}
 
