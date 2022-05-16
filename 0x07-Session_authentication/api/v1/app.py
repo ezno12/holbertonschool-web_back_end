@@ -7,7 +7,7 @@ from logging import basicConfig
 from os import getenv
 from api.v1.views import app_views
 from flask import Flask, jsonify, abort, request
-from flask_cors import (CORS, cross_origin)
+from flask_cors import CORS, cross_origin
 import os
 from api.v1.auth.auth import Auth
 from api.v1.auth.session_auth import SessionAuth
@@ -19,9 +19,9 @@ CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 auth = None
 
 
-if os.getenv('AUTH_TYPE') == 'basic_auth':
+if os.getenv("AUTH_TYPE") == "basic_auth":
     auth = BasicAuth()
-if os.getenv('AUTH_TYPE') == 'session_auth':
+if os.getenv("AUTH_TYPE") == "session_auth":
     auth = SessionAuth()
 else:
     auth = Auth()
@@ -37,31 +37,34 @@ def forbidden(error) -> str:
 
 @app.errorhandler(401)
 def request_unauthorized(error) -> str:
-    """ unauthorized handler
-    """
+    """unauthorized handler"""
     return jsonify({"error": "Unauthorized"}), 401
 
 
 @app.errorhandler(404)
 def not_found(error) -> str:
-    """ Not found handler
-    """
+    """Not found handler"""
     return jsonify({"error": "Not found"}), 404
 
 
 @app.before_request
 def before_req() -> None:
-    """
-    """
+    """Not found handler"""
     if auth is None:
         return
-    routes_list = ['/api/v1/status/',
-                   '/api/v1/unauthorized/',
-                   '/api/v1/forbidden/']
+    routes_list = [
+        "/api/v1/status/",
+        "/api/v1/unauthorized/",
+        "/api/v1/forbidden/",
+        "/api/v1/auth_session/login/",
+    ]
 
     if auth.require_auth(request.path, routes_list) is False:
         return
-    if auth.authorization_header(request) is None:
+    if (
+        auth.authorization_header(request) is None
+        or auth.session_cookie(request) is None
+    ):
         abort(401)
     request.current_user = auth.current_user(request)
     if auth.current_user(request) is None:
