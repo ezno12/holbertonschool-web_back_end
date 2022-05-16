@@ -37,19 +37,25 @@ def forbidden(error) -> str:
 
 @app.errorhandler(401)
 def request_unauthorized(error) -> str:
-    """unauthorized handler"""
+    """
+    unauthorized handler
+    """
     return jsonify({"error": "Unauthorized"}), 401
 
 
 @app.errorhandler(404)
 def not_found(error) -> str:
-    """Not found handler"""
+    """
+    Not found handler
+    """
     return jsonify({"error": "Not found"}), 404
 
 
 @app.before_request
 def before_req() -> None:
-    """Not found handler"""
+    """
+    Not found handler
+    """
     if auth is None:
         return
     routes_list = [
