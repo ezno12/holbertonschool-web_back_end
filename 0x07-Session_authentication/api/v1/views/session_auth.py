@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 """
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, abort
 from api.v1.views import app_views
 import os
 from models.user import User
@@ -35,3 +35,17 @@ def login():
             return response
         else:
             return jsonify({"error": "wrong password"}), 401
+
+
+@app_views.route('/auth_session/logout', methods=['DELETE'],
+                 strict_slashes=False)
+def logout():
+    """ Delete auth session and logout
+    """
+    from api.v1.app import auth
+
+    deleted = auth.destroy_session(request)
+    if not deleted:
+        abort(404)
+
+    return jsonify({}), 200
