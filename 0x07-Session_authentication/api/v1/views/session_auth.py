@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 """
+from flask import Flask, request, jsonify
 from api.v1.views import app_views
-from flask import Flask, jsonify, abort, request
 import os
 from models.user import User
 
