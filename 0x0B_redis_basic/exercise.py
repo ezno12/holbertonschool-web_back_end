@@ -4,7 +4,7 @@ modul for Redis tasks
 """
 import redis
 from uuid import uuid4
-from typing import Union
+from typing import Union, Callable, Optional
 
 
 class Cache:
@@ -21,3 +21,25 @@ class Cache:
         key = str(uuid4())
         self._redis.set(key, data)
         return key
+
+    def get(self, key: str, fn: Optional[Callable] = None) -> Union[str, bytes, int, float]: 
+        """
+        get a key of redis
+        """
+        if key:
+            if fn:
+                return fn(self._redis.get(key))
+            else:
+                return self._redis.get(key)
+
+    def get_str(data: bytes) -> str:
+        """
+        convert date to string
+        """
+        return data.decode("utf-8")
+
+    def get_int(data: bytes) -> int:
+        """
+        convert data to int
+        """
+        return int(data)
