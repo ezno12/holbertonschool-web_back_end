@@ -8,7 +8,7 @@ from typing import Union, Callable, Optional
 from functools import wraps
 
 
-def count_calls(method:Callable) -> Callable:
+def count_calls(method: Callable) -> Callable:
     """
     count each time Cache called decoretor
     """
@@ -21,6 +21,7 @@ def count_calls(method:Callable) -> Callable:
         self._redis.incr(key)
         return method(self, *args, **kwds)
     return wrapper
+
 
 def call_history(method: Callable) -> Callable:
     """
@@ -40,6 +41,19 @@ def call_history(method: Callable) -> Callable:
     return wrapper
 
 
+def replay(fn: Callable) -> str:
+    """Retrieving lists"""
+    method = fn.__qualname__
+    inputs = f"{method}:inputs"
+    outputs = f"{method}:outputs"
+    input_list = fn.__self__._redis.lrange(inputs, 0, -1)
+    output_list = fn.__self__._redis.lrange(outputs, 0, -1)
+    ValueKey = fn.__self__._redis.get(method).decode('utf-8')
+    print(f"{method} was called {ValueKey} times:")
+    for inp, out in zip(input_list, output_list):
+        print(f"{method}(*{inp.decode('utf-8')}) -> {out.decode('utf-8')}")
+
+
 class Cache:
     """
     cache class
@@ -57,7 +71,8 @@ class Cache:
         self._redis.set(key, data)
         return key
 
-    def get(self, key: str, fn: Optional[Callable] = None) -> Union[str, bytes, int, float]: 
+    def get(self, key: str, fn: Optional[Callable] = None) ->\
+            Union[str, bytes, int, float]:
         """
         get a key of redis
         """
