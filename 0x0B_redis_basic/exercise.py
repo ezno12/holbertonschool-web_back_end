@@ -10,6 +10,7 @@ from functools import wraps
 
 def count_calls(method:Callable) -> Callable:
     """
+    count each time Cache called decoretor
     """
     key = method.__qualname__
 
@@ -19,6 +20,21 @@ def count_calls(method:Callable) -> Callable:
         """
         self._redis.incr(key)
         return method(self, *args, **kwds)
+    return wrapper
+
+def call_history(method: Callable) -> Callable:
+    """
+    """
+    inputKey = method.__qualname__ + ":inputs"
+    outputKey = method.__qualname__ + ":outputs"
+
+    @wraps(method)
+    def wrapper(self, *args, **kwds):
+        """
+        """
+        self._redis.rpush(inputKey, str(args))
+        value = method(self, *args, *kwds)
+        return self._redis.rpush(outputKey, value)
     return wrapper
 
 
@@ -31,6 +47,7 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb()
 
+    @call_history
     @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """generate a random key"""
