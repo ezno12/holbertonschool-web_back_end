@@ -8,5 +8,6 @@ IF b != 0 THEN
 RETURN a / b;
 ELSE
 RETURN 0;
+END IF;
 END;
 DELIMITER;
