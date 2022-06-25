@@ -6,5 +6,4 @@ def insert_school(mongo_collection, **kwargs):
     """
     function to insert new do to collection
     """
-    for arg in kwargs.values():
-        return mongo_collection.insert_one(arg).inserted_id 
+    return mongo_collection.insert_one(kwargs).inserted_id
