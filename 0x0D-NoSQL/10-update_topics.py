@@ -9,4 +9,4 @@ def update_topics(mongo_collection, name, topics):
     key_name = {'name': name}
     value = {"$set": {"topics": topics}}
 
-    mongo_collection.update_one(key_name, value)
+    mongo_collection.update_many(key_name, value)
