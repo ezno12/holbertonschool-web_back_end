@@ -8,4 +8,4 @@ def list_all(mongo_collection):
     """
     if mongo_collection is None:
         return []
-    return mongo_collection.find({})
+    return mongo_collection.find()
