@@ -8,8 +8,8 @@ module.exports = function countStudents(path) {
       }
       if (dataFile) {
         const fields = {};
-        const data = dataFile.toString().split('\n');
-        data.filter((elem) => elem.length > 0);
+        let data = dataFile.toString().split('\n');
+        data = data.filter((elem) => elem.length > 0);
         data.shift();
 
         data.forEach((elem) => {
