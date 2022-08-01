@@ -3,17 +3,14 @@ const countStudents = require('./3-read_file_async');
 
 const app = express();
 
-
-
-
 app.get('/students', async (req, res) => {
-    try {
-        let message =  countStudents(process.argv[2])
-        const response = `This is the list of our students\n${message}`;
-        res.end(response);
-      } catch (err) {
-        res.end(`${err.message}\n`);
-      }
+  try {
+    const message = countStudents(process.argv[2]);
+    const response = `This is the list of our students\n${message}`;
+    res.end(response);
+  } catch (err) {
+    res.end(`${err.message}\n`);
+  }
 });
 
 app.get('/', (req, res) => {
