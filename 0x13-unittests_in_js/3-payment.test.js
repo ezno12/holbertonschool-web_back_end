@@ -1,11 +1,11 @@
 /* eslint-disable jest/valid-expect */
 const { expect } = require('chai');
-const { spy } = require('sinon');
+const sinon = require('sinon');
 const Utils = require('./utils');
 const sendPaymentRequestToApi = require('./3-payment');
 
 describe('utlis', () => {
-  const CalSpy = spy(Utils, 'calculateNumber');
+  const CalSpy = sinon.spy(Utils, 'calculateNumber');
   /* eslint-disable-next-line */
   it('should call it', () => {
     sendPaymentRequestToApi(100, 20);
